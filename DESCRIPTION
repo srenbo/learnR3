@@ -5,3 +5,5 @@ Imports:
     knitr,
     rmarkdown
 Encoding: UTF-8
+URL: https://github.com/srenbo/learnR3
+BugReports: https://github.com/srenbo/learnR3/issues
