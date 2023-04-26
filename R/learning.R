@@ -18,5 +18,4 @@ library(Hmisc)
 
 #test this sh*****
 
-
-#Here is an example of a conflict
+#why does this need to be so complicated
