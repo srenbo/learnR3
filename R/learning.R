@@ -110,8 +110,24 @@ nhanes_modified
 
 
 
+# Creating summary statistics ---------------------------------------------
+
+nhanes_small %>% summarise(
+    max_bmi = max(bmi, na.rm=T),
+    min_bmi = min(bmi, na.rm=T)
+    )
 
 
+diabeetus <- nhanes_small %>%
+    filter(!is.na(diabetes)) %>%
+    group_by(diabetes) %>%
+    summarise(
+        max_bmi = max(bmi, na.rm=T),
+        min_bmi = min(bmi, na.rm=T)
+    ) %>%
+    ungroup()
+
+readr::write_csv(nhanes_small, here::here("data/nhanes_small.csv"))
 
 
 
