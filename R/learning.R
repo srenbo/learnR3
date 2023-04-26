@@ -68,3 +68,53 @@ nhanes_small %>% select(bmi, contains("age"))
 nhanes_small %>%
   select(starts_with("bp_")) %>%
   rename(bp_systolic = bp_sys_ave)
+
+
+# Filtering ---------------------------------------------------------------
+nhanes_small %>% dplyr::filter(phys_active == "No")
+nhanes_small %>% filter(bmi >= 25)
+
+
+# Combining logical operators ---------------------------------------------
+
+nhanes_small %>%
+  filter(bmi >= 25 & phys_active == "No")
+
+nhanes_small %>% filter(bmi >= 25 | phys_active == "No")
+nhanes_small %>% filter(bmi >= 25 | phys_active == "No")
+
+# Arrange data ------------------------------------------------------------
+
+nhanes_small %>% arrange(age)
+
+nhanes_small %>% arrange(age, education)
+
+
+# Transform data ----------------------------------------------------------
+
+nhanes_small %>% mutate(age_months = age * 12)
+
+
+# Exercise 7.12 -----------------------------------------------------------
+
+nhanes_small %>% filter(bmi >= 20 & bmi <= 40 & diabetes == "Yes")
+
+nhanes_modified <- nhanes_small %>% mutate(
+        mean_arterial_pressure =((2* bp_sys_ave) + bp_dia_ave)/3 ,
+        young_child=if_else(age <= 6, "Yes", "No")
+)
+
+
+nhanes_modified
+
+
+
+
+
+
+
+
+
+
+
+
