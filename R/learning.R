@@ -17,3 +17,6 @@ library(Hmisc)
 # this will be used for testing git
 
 #test this sh*****
+
+
+#Here is an example of a conflict
