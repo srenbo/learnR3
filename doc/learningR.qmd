@@ -12,7 +12,9 @@ csl: blood.csl
 
 library(tidyverse)
 library(NHANES)
+library(ggplot2)
 nhanes_small <- read_csv(here::here("data/nhanes_small.csv"), show_col_types = F)
+# rbbt::bbt_update_bib(here::here("doc/learningR.qmd"))
 ```
 
 ```{r}
@@ -56,9 +58,107 @@ nhanes_small %>%
 
 
 ## Image referencing
-@fig-leukemia
 
 
 ## using references
+What about the next one? @Olwill2005-fi
 This is a text i have written and i will reference Olwill et al @Olwill2005-fi
+@Stanworth2013-or 
+Could not export bibliography: @Estcourt2011-rd
 
+
+
+## Visualizing data 
+```{r}
+# create a histogram for BMI
+ggplot(nhanes_small, aes(x = bmi)) +
+  geom_histogram()
+```
+
+```{r}
+# Create histogram, exclude NA's
+nhanes_small %>% ggplot(aes(x = bmi)) +
+  geom_histogram(na.rm = T)
+```
+
+
+```{r}
+# Filtering data using dplyr functions
+
+nhanes_small %>%
+  filter(bmi <= 60) %>%
+  ggplot(aes(bmi)) +
+  geom_histogram(na.rm = T)
+```
+```{r}
+nhanes_small %>%
+  ggplot(aes(sample = bmi)) +
+  stat_qq(na.rm = T) +
+  stat_qq_line(na.rm = T)
+```
+BMI distribution in NHANES dataset was visualised in @fig-bmi-histo
+
+```{r}
+#| fig-cap: "Distribution of BMI."
+#| label: fig-bmi-histo
+
+nhanes_small %>%
+  filter(bmi <= 60) %>%
+  ggplot(aes(bmi)) +
+  geom_histogram(na.rm = T)
+```
+
+
+```{r}
+# Create count barplot for education
+
+nhanes_small %>%
+  ggplot(aes(education)) +
+  geom_bar()
+```
+```{r}
+# Create count barplot for diabetes status
+
+ggplot(nhanes_small, aes(diabetes)) +
+  geom_bar()
+```
+
+
+```{r}
+# Filter NA values from dataset
+nhanes_small %>%
+  filter(!is.na(diabetes)) %>%
+  ggplot(aes(diabetes)) +
+  geom_bar()
+```
+
+
+
+
+```{r}
+# filter NA values in the education variable
+nhanes_small %>%
+  filter(!is.na(education)) %>%
+  ggplot(aes(education, fill = diabetes), position = position_dodge(width = 5)) +
+  geom_bar()
+```
+
+
+```{r}
+#| label: fig-diabetes-education
+#| fig-cap: "Counts of diabetes and education in NHANES."
+#| fig-subcap:
+#|   - "Number of those with or without diabetes"
+#|   - "Number of different education status"
+#| layout-ncol: 2
+
+nhanes_small %>%
+  filter(!is.na(diabetes)) %>%
+  ggplot(aes(diabetes)) +
+  geom_bar()
+
+nhanes_small %>%
+  filter(!is.na(education)) %>%
+  ggplot(aes(education)) +
+  geom_bar()
+```
